@@ -17,9 +17,11 @@ import java.util.List;
 public class CourseController {
 
     private final CourseRepository courseRepository;
+    private final CategoryRepository categoryRepository;
 
-    public CourseController(CourseRepository courseRepository) {
+    public CourseController(CourseRepository courseRepository, CategoryRepository categoryRepository) {
         this.courseRepository = courseRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @QueryMapping
@@ -29,7 +31,10 @@ public class CourseController {
 
     @MutationMapping
     public Course createCourse(@Argument NewCourse input) {
-        Course course = Course.save(input.name(), input.description(), input.categoryId());
+        Category category = categoryRepository.findById(input.categoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        Course course = Course.save(input.name(), input.description(), category);
         return courseRepository.save(course);
     }
 

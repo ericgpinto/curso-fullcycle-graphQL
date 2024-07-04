@@ -27,6 +27,7 @@ input NewCourse {
 type Query {
     categories: [Category!]!
     courses: [Course!]!
+    categoryById(id: ID!): [Category!]!
 }
 
 type Mutation {

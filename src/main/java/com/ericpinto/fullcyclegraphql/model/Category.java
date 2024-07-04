@@ -1,10 +1,12 @@
 package com.ericpinto.fullcyclegraphql.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.UUID;
 
 @Entity(name = "categories")
+@Data
 public class Category {
 
     @Id
